@@ -62,10 +62,13 @@ As migrations ficam em `database/migrations`, têm classe PHP com métodos `up(P
 
 ## Usuário Inicial
 
-Após rodar as migrations, acesse com:
+Antes de rodar as migrations, configure o Super Admin no `.env`:
 
-- E-mail: `admin@melhoria.local`
-- Senha: `admin123`
+```env
+SUPER_ADMIN_NAME="Super Admin"
+SUPER_ADMIN_EMAIL=seu-email
+SUPER_ADMIN_PASSWORD=sua-senha-segura
+```
 
 Altere a senha no primeiro acesso.
 

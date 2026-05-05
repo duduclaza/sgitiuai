@@ -228,16 +228,24 @@ class CreateInitialSchema
 
     private function seed(PDO $pdo): void
     {
+        $superAdminName = env('SUPER_ADMIN_NAME', 'Super Admin');
+        $superAdminEmail = env('SUPER_ADMIN_EMAIL', '');
+        $superAdminPassword = env('SUPER_ADMIN_PASSWORD', '');
+
+        if ($superAdminEmail === '' || $superAdminPassword === '') {
+            throw new RuntimeException('Configure SUPER_ADMIN_EMAIL e SUPER_ADMIN_PASSWORD no .env antes de executar as migrations.');
+        }
+
         $statement = $pdo->prepare(
             "INSERT INTO usuarios (nome, email, senha, perfil, status, permissoes)
              SELECT :nome, :email, :senha, 'super_admin', 'ativo', :permissoes
              WHERE NOT EXISTS (SELECT 1 FROM usuarios WHERE email = :email_check)"
         );
         $statement->execute([
-            'nome' => 'Super Admin',
-            'email' => 'admin@melhoria.local',
-            'email_check' => 'admin@melhoria.local',
-            'senha' => password_hash('admin123', PASSWORD_DEFAULT),
+            'nome' => $superAdminName,
+            'email' => $superAdminEmail,
+            'email_check' => $superAdminEmail,
+            'senha' => password_hash($superAdminPassword, PASSWORD_DEFAULT),
             'permissoes' => json_encode(['criar_melhoria', 'comentar', 'anexar', 'relatorios', 'ia']),
         ]);
 
