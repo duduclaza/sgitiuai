@@ -2,6 +2,7 @@
 
 use App\Core\Env;
 use App\Core\Router;
+use App\Core\CorsMiddleware;
 
 $autoload = dirname(__DIR__) . '/vendor/autoload.php';
 if (file_exists($autoload)) {
@@ -19,6 +20,9 @@ if (file_exists($autoload)) {
         }
     });
 }
+
+// Aplicar CORS middleware
+CorsMiddleware::handle();
 
 Env::load(dirname(__DIR__) . '/.env');
 

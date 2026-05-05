@@ -1,6 +1,8 @@
 <?php
 
 use App\Controllers\AiAgentController;
+use App\Controllers\ApiAuthController;
+use App\Controllers\ApiPublicController;
 use App\Controllers\AttachmentController;
 use App\Controllers\AuditLogController;
 use App\Controllers\AuthController;
@@ -17,6 +19,16 @@ use App\Controllers\ReportController;
 use App\Controllers\SwotController;
 use App\Controllers\UserController;
 
+// API Routes
+$router->post('/api/auth/login', [ApiAuthController::class, 'login']);
+$router->post('/api/auth/logout', [ApiAuthController::class, 'logout'], ['auth']);
+$router->get('/api/auth/me', [ApiAuthController::class, 'me'], ['auth']);
+
+$router->get('/api/public/departments', [ApiPublicController::class, 'getDepartments']);
+$router->post('/api/public/melhorias', [ApiPublicController::class, 'store']);
+$router->post('/api/public/melhorias/consultar', [ApiPublicController::class, 'lookup']);
+
+// Legacy Routes (keep for backward compatibility)
 $router->get('/melhoria-publica', [PublicImprovementController::class, 'index']);
 $router->post('/melhoria-publica', [PublicImprovementController::class, 'store']);
 $router->post('/melhoria-publica/consultar', [PublicImprovementController::class, 'lookup']);
