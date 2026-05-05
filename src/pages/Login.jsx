@@ -25,7 +25,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
+    <div className="flex min-h-screen items-center justify-center bg-slate-900 px-4">
       {/* Login Container */}
       <div className="w-full max-w-md">
         {/* Header */}
@@ -33,15 +33,15 @@ const Login = () => {
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-lg bg-blue-600 text-lg font-black text-white shadow-md">
             SGI
           </div>
-          <h1 className="text-2xl font-bold text-slate-900">SGI TI UAI</h1>
-          <p className="mt-1 text-sm text-slate-600">Gestão de Melhorias Contínuas</p>
+          <h1 className="text-2xl font-bold text-white">SGI TI UAI</h1>
+          <p className="mt-1 text-sm text-slate-300">Gestão de Melhorias Contínuas</p>
         </div>
 
         {/* Login Card */}
-        <div className="rounded-lg bg-white p-8 shadow-lg border border-slate-200">
+        <div className="rounded-lg bg-slate-800 p-8 shadow-xl border border-slate-700">
           {/* Error Message */}
           {errors.general && (
-            <div className="mb-6 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm font-medium text-red-700">
+            <div className="mb-6 rounded-lg bg-red-500/20 border border-red-500/50 px-4 py-3 text-sm font-medium text-red-200">
               {errors.general}
             </div>
           )}
@@ -50,7 +50,7 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-semibold text-slate-200 mb-2">
                 E-mail
               </label>
               <input
@@ -61,13 +61,13 @@ const Login = () => {
                 placeholder="nome@empresa.com"
                 required
                 autoComplete="email"
-                className="w-full rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 placeholder-slate-400 transition focus:bg-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                className="w-full rounded-lg border border-slate-600 bg-slate-700 px-4 py-3 text-white placeholder-slate-400 transition focus:bg-slate-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-slate-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-semibold text-slate-200 mb-2">
                 Senha
               </label>
               <div className="relative">
@@ -79,12 +79,12 @@ const Login = () => {
                   placeholder="••••••••"
                   required
                   autoComplete="current-password"
-                  className="w-full rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 pr-12 text-slate-900 placeholder-slate-400 transition focus:bg-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-slate-600 bg-slate-700 px-4 py-3 pr-12 text-white placeholder-slate-400 transition focus:bg-slate-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 transition"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition"
                   title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -110,7 +110,7 @@ const Login = () => {
           </form>
 
           {/* Footer */}
-          <p className="mt-6 text-center text-xs text-slate-500">
+          <p className="mt-6 text-center text-xs text-slate-400">
             Conexão segura e criptografada
           </p>
         </div>
