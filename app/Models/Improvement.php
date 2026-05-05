@@ -15,6 +15,7 @@ class Improvement extends Model
         'prioridade',
         'status',
         'responsavel_id',
+        'responsavel_nome',
         'prazo',
         'ganho_estimado',
         'data_abertura',
@@ -27,7 +28,7 @@ class Improvement extends Model
     public function list(array $filters = []): array
     {
         [$where, $params] = $this->buildFilters($filters);
-        $sql = "SELECT m.*, d.nome AS departamento_nome, u.nome AS responsavel_nome, c.nome AS criador_nome
+        $sql = "SELECT m.*, d.nome AS departamento_nome, COALESCE(NULLIF(m.responsavel_nome, ''), u.nome) AS responsavel_nome, c.nome AS criador_nome
                 FROM melhorias m
                 LEFT JOIN departamentos d ON d.id = m.departamento_id
                 LEFT JOIN usuarios u ON u.id = m.responsavel_id
@@ -43,12 +44,12 @@ class Improvement extends Model
     public function findWithRelations(int $id): ?array
     {
         $statement = $this->db()->prepare(
-            'SELECT m.*, d.nome AS departamento_nome, u.nome AS responsavel_nome, c.nome AS criador_nome
+            "SELECT m.*, d.nome AS departamento_nome, COALESCE(NULLIF(m.responsavel_nome, ''), u.nome) AS responsavel_nome, c.nome AS criador_nome
              FROM melhorias m
              LEFT JOIN departamentos d ON d.id = m.departamento_id
              LEFT JOIN usuarios u ON u.id = m.responsavel_id
              LEFT JOIN usuarios c ON c.id = m.criado_por
-             WHERE m.id = :id LIMIT 1'
+             WHERE m.id = :id LIMIT 1"
         );
         $statement->execute(['id' => $id]);
         $item = $statement->fetch();
@@ -101,6 +102,11 @@ class Improvement extends Model
         if (!empty($filters['responsavel_id'])) {
             $sql .= ' AND m.responsavel_id = :responsavel_id';
             $params['responsavel_id'] = $filters['responsavel_id'];
+        }
+
+        if (!empty($filters['responsavel_nome'])) {
+            $sql .= ' AND (m.responsavel_nome LIKE :responsavel_nome OR u.nome LIKE :responsavel_nome)';
+            $params['responsavel_nome'] = '%' . $filters['responsavel_nome'] . '%';
         }
 
         if (!empty($filters['inicio'])) {

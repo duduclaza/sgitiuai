@@ -8,7 +8,6 @@ use App\Models\Attachment;
 use App\Models\Comment;
 use App\Models\Department;
 use App\Models\Improvement;
-use App\Models\User;
 use App\Services\AuditLogger;
 use App\Services\NotificationService;
 
@@ -24,14 +23,13 @@ class ImprovementController extends Controller
             'status' => $_GET['status'] ?? '',
             'prioridade' => $_GET['prioridade'] ?? '',
             'departamento_id' => $_GET['departamento_id'] ?? '',
-            'responsavel_id' => $_GET['responsavel_id'] ?? '',
+            'responsavel_nome' => $_GET['responsavel_nome'] ?? '',
         ];
 
         $this->view('melhorias/index', [
             'title' => 'Melhorias',
             'improvements' => (new Improvement())->list($filters),
             'departments' => (new Department())->active(),
-            'users' => (new User())->list(),
             'filters' => $filters,
             'statuses' => $this->statuses,
             'priorities' => $this->priorities,
@@ -62,9 +60,6 @@ class ImprovementController extends Controller
         $id = (new Improvement())->create($data);
 
         AuditLogger::log('criação', 'melhorias', $id, ['titulo' => $data['titulo']]);
-        if (!empty($data['responsavel_id']) && (int) $data['responsavel_id'] !== Auth::id()) {
-            (new NotificationService())->create((int) $data['responsavel_id'], 'Nova melhoria atribuída', $data['titulo'], 'acao', '/melhorias/' . $id);
-        }
 
         flash('success', 'Melhoria cadastrada.');
         redirect('/melhorias/' . $id);
@@ -129,7 +124,6 @@ class ImprovementController extends Controller
             'title' => $title,
             'improvement' => $improvement,
             'departments' => (new Department())->active(),
-            'users' => (new User())->list(),
             'statuses' => $this->statuses,
             'priorities' => $this->priorities,
         ];
@@ -149,7 +143,8 @@ class ImprovementController extends Controller
             'melhoria_sugerida' => trim((string) ($_POST['melhoria_sugerida'] ?? '')),
             'prioridade' => (string) ($_POST['prioridade'] ?? 'Média'),
             'status' => (string) ($_POST['status'] ?? 'Aberta'),
-            'responsavel_id' => $_POST['responsavel_id'] !== '' ? (int) $_POST['responsavel_id'] : null,
+            'responsavel_id' => null,
+            'responsavel_nome' => trim((string) ($_POST['responsavel_nome'] ?? '')),
             'prazo' => ($_POST['prazo'] ?? '') !== '' ? $_POST['prazo'] : null,
             'ganho_estimado' => (float) str_replace(',', '.', (string) ($_POST['ganho_estimado'] ?? 0)),
             'data_abertura' => ($_POST['data_abertura'] ?? '') !== '' ? $_POST['data_abertura'] : null,

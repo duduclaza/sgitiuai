@@ -17,10 +17,7 @@
     </label>
     <label>
       <span class="mb-2 block text-sm font-bold text-slate-700">Responsável</span>
-      <select class="form-select" name="responsavel_id">
-        <option value="">Todos</option>
-        <?php foreach ($users as $user): ?><option value="<?= (int) $user['id'] ?>" <?= (string) $filters['responsavel_id'] === (string) $user['id'] ? 'selected' : '' ?>><?= e($user['nome']) ?></option><?php endforeach; ?>
-      </select>
+      <input class="form-input" name="responsavel_nome" value="<?= e($filters['responsavel_nome']) ?>" placeholder="Nome do responsável">
     </label>
     <label>
       <span class="mb-2 block text-sm font-bold text-slate-700">Início</span>

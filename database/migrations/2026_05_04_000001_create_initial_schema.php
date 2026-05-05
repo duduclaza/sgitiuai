@@ -43,6 +43,7 @@ class CreateInitialSchema
                 prioridade ENUM('Baixa', 'Média', 'Alta', 'Crítica') NOT NULL DEFAULT 'Média',
                 status ENUM('Aberta', 'Em análise', 'Aprovada', 'Em implantação', 'Concluída', 'Cancelada') NOT NULL DEFAULT 'Aberta',
                 responsavel_id INT UNSIGNED NULL,
+                responsavel_nome VARCHAR(150) NULL,
                 prazo DATE NULL,
                 ganho_estimado DECIMAL(14,2) NOT NULL DEFAULT 0,
                 data_abertura DATE NOT NULL,

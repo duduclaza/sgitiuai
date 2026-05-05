@@ -10,7 +10,7 @@ $statusColors = [
 $priorityColors = ['Baixa' => 'bg-slate-100 text-slate-700', 'Média' => 'bg-blue-100 text-blue-700', 'Alta' => 'bg-orange-100 text-orange-700', 'Crítica' => 'bg-red-100 text-red-700'];
 ?>
 <div class="mb-5 flex flex-col gap-3 xl:flex-row xl:items-end xl:justify-between">
-  <form method="get" class="grid flex-1 gap-3 md:grid-cols-3 xl:grid-cols-6">
+  <form method="get" class="grid flex-1 gap-3 md:grid-cols-3 xl:grid-cols-7">
     <input class="form-input md:col-span-2 xl:col-span-2" name="q" value="<?= e($filters['q']) ?>" placeholder="Buscar melhoria">
     <select class="form-select" name="status">
       <option value="">Todos os status</option>
@@ -24,6 +24,7 @@ $priorityColors = ['Baixa' => 'bg-slate-100 text-slate-700', 'Média' => 'bg-blu
       <option value="">Departamentos</option>
       <?php foreach ($departments as $department): ?><option value="<?= (int) $department['id'] ?>" <?= (string) $filters['departamento_id'] === (string) $department['id'] ? 'selected' : '' ?>><?= e($department['nome']) ?></option><?php endforeach; ?>
     </select>
+    <input class="form-input" name="responsavel_nome" value="<?= e($filters['responsavel_nome']) ?>" placeholder="Responsável">
     <button class="btn-secondary" type="submit"><i data-lucide="search" class="h-4 w-4"></i>Filtrar</button>
   </form>
   <?php if (can(['admin', 'usuario'], 'criar_melhoria')): ?>

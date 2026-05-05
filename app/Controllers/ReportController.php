@@ -6,7 +6,6 @@ use App\Core\Auth;
 use App\Core\Controller;
 use App\Models\Department;
 use App\Models\Improvement;
-use App\Models\User;
 use App\Services\ReportService;
 
 class ReportController extends Controller
@@ -27,7 +26,6 @@ class ReportController extends Controller
             'rows' => $rows,
             'filters' => $filters,
             'departments' => (new Department())->active(),
-            'users' => (new User())->list(),
             'statuses' => (new ImprovementController())->statuses,
         ]);
     }
@@ -62,7 +60,7 @@ class ReportController extends Controller
         return [
             'status' => $_GET['status'] ?? '',
             'departamento_id' => $_GET['departamento_id'] ?? '',
-            'responsavel_id' => $_GET['responsavel_id'] ?? '',
+            'responsavel_nome' => $_GET['responsavel_nome'] ?? '',
             'inicio' => $_GET['inicio'] ?? '',
             'fim' => $_GET['fim'] ?? '',
         ];
