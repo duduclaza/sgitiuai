@@ -34,13 +34,13 @@ $menu = [
 </head>
 <body class="text-slate-900">
   <div data-sidebar-close class="fixed inset-0 z-30 hidden bg-slate-950/30 backdrop-blur-sm lg:hidden"></div>
-  <aside class="sidebar fixed inset-y-0 left-0 z-40 flex flex-col border-r border-slate-200/80 bg-white/88 p-4 shadow-xl shadow-slate-300/30 backdrop-blur-2xl">
+  <aside class="sidebar fixed inset-y-0 left-0 z-40 flex flex-col border-r border-slate-800 bg-slate-950 p-4 shadow-xl shadow-black/30">
     <div class="flex items-center justify-between gap-3">
       <a href="<?= url('/dashboard') ?>" class="flex min-w-0 items-center gap-3">
         <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-blue-600 text-sm font-black text-white">MC</span>
-        <span class="sidebar-brand-text truncate text-sm font-black leading-tight text-slate-950"><?= e(config('app.name')) ?></span>
+        <span class="sidebar-brand-text truncate text-sm font-black leading-tight text-white"><?= e(config('app.name')) ?></span>
       </a>
-      <button type="button" data-sidebar-toggle class="grid h-10 w-10 shrink-0 place-items-center rounded-2xl border border-slate-200 text-slate-600 hover:bg-slate-50" title="Recolher menu">
+      <button type="button" data-sidebar-toggle class="grid h-10 w-10 shrink-0 place-items-center rounded-2xl border border-slate-800 text-slate-400 hover:bg-slate-800" title="Recolher menu">
         <i data-lucide="panel-left-close" class="h-5 w-5"></i>
       </button>
     </div>
@@ -49,7 +49,7 @@ $menu = [
     <nav class="mt-3 flex-1 space-y-1">
       <?php foreach ($menu as $item): ?>
         <?php if (!$item['show']) continue; $active = is_active($item['active']); ?>
-        <a href="<?= url($item['url']) ?>" class="nav-item group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-bold transition <?= $active ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-slate-600 hover:bg-blue-50 hover:text-blue-700' ?>">
+        <a href="<?= url($item['url']) ?>" class="nav-item group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-sm font-bold transition <?= $active ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' ?>">
           <i data-lucide="<?= e($item['icon']) ?>" class="h-5 w-5 shrink-0"></i>
           <span class="sidebar-label truncate"><?= e($item['label']) ?></span>
           <?php if ($item['url'] === '/notificacoes' && $notificationCount > 0): ?>
@@ -59,10 +59,10 @@ $menu = [
       <?php endforeach; ?>
     </nav>
 
-    <div class="rounded-3xl bg-slate-50 p-3">
+    <div class="rounded-3xl bg-slate-900 p-3 border border-slate-800">
       <p class="sidebar-label text-xs font-bold text-slate-500">Sessão</p>
-      <p class="sidebar-label mt-1 truncate text-sm font-black text-slate-900"><?= e($user['nome'] ?? '') ?></p>
-      <p class="sidebar-label truncate text-xs text-slate-500"><?= e($user['perfil'] ?? '') ?></p>
+      <p class="sidebar-label mt-1 truncate text-sm font-black text-white"><?= e($user['nome'] ?? '') ?></p>
+      <p class="sidebar-label truncate text-xs text-slate-400"><?= e($user['perfil'] ?? '') ?></p>
     </div>
   </aside>
 
