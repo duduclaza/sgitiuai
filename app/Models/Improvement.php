@@ -60,7 +60,7 @@ class Improvement extends Model
     {
         $db = $this->db();
         $total = (int) $db->query('SELECT COUNT(*) FROM melhorias')->fetchColumn();
-        $late = (int) $db->query("SELECT COUNT(*) FROM melhorias WHERE prazo < CURDATE() AND status NOT IN ('Concluída', 'Cancelada')")->fetchColumn();
+        $open = (int) $db->query("SELECT COUNT(*) FROM melhorias WHERE status = 'Aberta'")->fetchColumn();
         $done = (int) $db->query("SELECT COUNT(*) FROM melhorias WHERE status = 'Concluída'")->fetchColumn();
         $implantation = (int) $db->query("SELECT COUNT(*) FROM melhorias WHERE status = 'Em implantação'")->fetchColumn();
         $gain = (float) $db->query("SELECT COALESCE(SUM(ganho_estimado), 0) FROM melhorias WHERE status <> 'Cancelada'")->fetchColumn();
@@ -69,7 +69,7 @@ class Improvement extends Model
         $byDepartment = $db->query('SELECT d.nome, COUNT(m.id) total FROM departamentos d LEFT JOIN melhorias m ON m.departamento_id = d.id GROUP BY d.id, d.nome ORDER BY total DESC LIMIT 8')->fetchAll();
         $monthly = $db->query("SELECT DATE_FORMAT(data_abertura, '%Y-%m') mes, COUNT(*) total FROM melhorias GROUP BY mes ORDER BY mes ASC LIMIT 12")->fetchAll();
 
-        return compact('total', 'late', 'done', 'implantation', 'gain', 'byStatus', 'byDepartment', 'monthly');
+        return compact('total', 'open', 'done', 'implantation', 'gain', 'byStatus', 'byDepartment', 'monthly');
     }
 
     public function report(array $filters = []): array

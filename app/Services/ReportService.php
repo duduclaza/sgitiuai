@@ -7,7 +7,7 @@ class ReportService
     public function csv(array $rows): string
     {
         $handle = fopen('php://temp', 'r+');
-        fputcsv($handle, ['ID', 'Título', 'Departamento', 'Status', 'Prioridade', 'Responsável', 'Prazo', 'Ganho Estimado'], ';');
+        fputcsv($handle, ['ID', 'Título', 'Departamento', 'Status', 'Prioridade', 'Responsável', 'Ganho Estimado'], ';');
         foreach ($rows as $row) {
             fputcsv($handle, [
                 $row['id'],
@@ -16,7 +16,6 @@ class ReportService
                 $row['status'],
                 $row['prioridade'],
                 $row['responsavel_nome'],
-                $row['prazo'],
                 number_format((float) $row['ganho_estimado'], 2, ',', '.'),
             ], ';');
         }
@@ -37,7 +36,7 @@ class ReportService
         foreach ($rows as $row) {
             $lines[] = "#{$row['id']} {$row['titulo']}";
             $lines[] = "Status: {$row['status']} | Prioridade: {$row['prioridade']} | Departamento: " . ($row['departamento_nome'] ?? '-');
-            $lines[] = "Responsável: " . ($row['responsavel_nome'] ?? '-') . ' | Prazo: ' . ($row['prazo'] ?? '-');
+            $lines[] = "Responsável: " . ($row['responsavel_nome'] ?? '-');
             $lines[] = 'Ganho estimado: ' . money_br($row['ganho_estimado'] ?? 0);
             $lines[] = '';
         }

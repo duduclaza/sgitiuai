@@ -42,7 +42,6 @@ $priorityColors = ['Baixa' => 'bg-slate-100 text-slate-700', 'Média' => 'bg-blu
         <th>Status</th>
         <th>Prioridade</th>
         <th>Responsável</th>
-        <th>Prazo</th>
         <th class="text-right">Ações</th>
       </tr>
       </thead>
@@ -57,7 +56,6 @@ $priorityColors = ['Baixa' => 'bg-slate-100 text-slate-700', 'Média' => 'bg-blu
           <td><span class="badge <?= $statusColors[$improvement['status']] ?? 'bg-slate-100 text-slate-700' ?>"><?= e($improvement['status']) ?></span></td>
           <td><span class="badge <?= $priorityColors[$improvement['prioridade']] ?? 'bg-slate-100 text-slate-700' ?>"><?= e($improvement['prioridade']) ?></span></td>
           <td><?= e($improvement['responsavel_nome'] ?? '-') ?></td>
-          <td><?= date_br($improvement['prazo']) ?></td>
           <td>
             <div class="flex justify-end gap-2">
               <a class="btn-secondary !p-2.5" href="<?= url('/melhorias/' . $improvement['id']) ?>" title="Ver"><i data-lucide="eye" class="h-4 w-4"></i></a>
@@ -68,7 +66,7 @@ $priorityColors = ['Baixa' => 'bg-slate-100 text-slate-700', 'Média' => 'bg-blu
           </td>
         </tr>
       <?php endforeach; ?>
-      <?php if (!$improvements): ?><tr><td colspan="7" class="text-center text-slate-500">Nenhuma melhoria encontrada.</td></tr><?php endif; ?>
+      <?php if (!$improvements): ?><tr><td colspan="6" class="text-center text-slate-500">Nenhuma melhoria encontrada.</td></tr><?php endif; ?>
       </tbody>
     </table>
   </div>

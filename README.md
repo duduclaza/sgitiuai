@@ -150,7 +150,7 @@ https://sgi.tiuai.com.br
 - Dashboard com cards, indicadores e gráficos
 - Usuários com perfis, status e permissões
 - Departamentos
-- Melhorias com status, prioridade, prazo, causa raiz e ganho estimado
+- Melhorias com status, prioridade, data de abertura, causa raiz e ganho estimado
 - Reuniões
 - PDCA vinculado à melhoria
 - SWOT vinculado à melhoria

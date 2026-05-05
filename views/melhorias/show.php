@@ -49,9 +49,7 @@ $statusColors = ['Aberta' => 'bg-sky-100 text-sky-700', 'Em análise' => 'bg-ind
       <h3 class="font-black text-slate-950">Acompanhamento</h3>
       <dl class="mt-4 space-y-3 text-sm">
         <div class="flex justify-between gap-4"><dt class="text-slate-500">Responsável</dt><dd class="font-bold text-slate-800"><?= e($improvement['responsavel_nome'] ?? '-') ?></dd></div>
-        <div class="flex justify-between gap-4"><dt class="text-slate-500">Prazo</dt><dd class="font-bold text-slate-800"><?= date_br($improvement['prazo']) ?></dd></div>
         <div class="flex justify-between gap-4"><dt class="text-slate-500">Abertura</dt><dd class="font-bold text-slate-800"><?= date_br($improvement['data_abertura']) ?></dd></div>
-        <div class="flex justify-between gap-4"><dt class="text-slate-500">Conclusão</dt><dd class="font-bold text-slate-800"><?= date_br($improvement['data_conclusao']) ?></dd></div>
         <div class="flex justify-between gap-4"><dt class="text-slate-500">Ganho</dt><dd class="font-bold text-slate-800"><?= money_br($improvement['ganho_estimado']) ?></dd></div>
       </dl>
     </article>

@@ -55,24 +55,14 @@ $responsavelAtual = old('responsavel_nome', $improvement['responsavel_nome'] ?? 
   <section class="soft-card rounded-3xl p-5 sm:p-6">
     <div class="mb-5 flex flex-col gap-1">
       <p class="text-xs font-black uppercase tracking-normal text-blue-600">Planejamento</p>
-      <h2 class="text-lg font-black text-slate-950">Prazo, retorno e acompanhamento</h2>
-      <p class="text-sm text-slate-500">Use estes campos para dar previsibilidade ao acompanhamento da ação.</p>
+      <h2 class="text-lg font-black text-slate-950">Abertura e retorno estimado</h2>
+      <p class="text-sm text-slate-500">Registre quando a melhoria foi aberta e, se possível, uma estimativa de ganho.</p>
     </div>
 
-    <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+    <div class="grid gap-5 sm:grid-cols-2">
       <label>
         <span class="mb-2 block text-sm font-bold text-slate-700">Data de abertura</span>
         <input class="form-input" type="date" name="data_abertura" value="<?= e(old('data_abertura', $improvement['data_abertura'] ?? date('Y-m-d'))) ?>">
-      </label>
-
-      <label>
-        <span class="mb-2 block text-sm font-bold text-slate-700">Prazo</span>
-        <input class="form-input" type="date" name="prazo" value="<?= e(old('prazo', $improvement['prazo'] ?? '')) ?>">
-      </label>
-
-      <label>
-        <span class="mb-2 block text-sm font-bold text-slate-700">Data de conclusão</span>
-        <input class="form-input" type="date" name="data_conclusao" value="<?= e(old('data_conclusao', $improvement['data_conclusao'] ?? '')) ?>">
       </label>
 
       <label>

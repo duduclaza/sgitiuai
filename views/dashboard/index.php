@@ -11,7 +11,7 @@ $statusColors = [
 <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
   <?php foreach ([
       ['label' => 'Total de melhorias', 'value' => $stats['total'], 'icon' => 'sparkles'],
-      ['label' => 'Atrasadas', 'value' => $stats['late'], 'icon' => 'timer'],
+      ['label' => 'Abertas', 'value' => $stats['open'], 'icon' => 'folder-open'],
       ['label' => 'Concluídas', 'value' => $stats['done'], 'icon' => 'circle-check'],
       ['label' => 'Em implantação', 'value' => $stats['implantation'], 'icon' => 'rocket'],
       ['label' => 'Ganho estimado', 'value' => money_br($stats['gain']), 'icon' => 'trending-up'],
