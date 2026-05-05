@@ -25,37 +25,32 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 px-4">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-blue-600/10 blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-blue-600/5 blur-3xl"></div>
-      </div>
-
-      {/* Login Card */}
-      <div className="relative w-full max-w-md">
-        <div className="rounded-2xl bg-white/10 p-8 shadow-2xl backdrop-blur-2xl border border-white/20">
-          {/* Logo */}
-          <div className="mb-8 text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 text-2xl font-black text-white shadow-lg">
-              SGI
-            </div>
-            <h1 className="text-3xl font-black text-white">SGI TI UAI</h1>
-            <p className="mt-2 text-sm text-slate-300">Sistema de Gestão de Melhorias</p>
+    <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
+      {/* Login Container */}
+      <div className="w-full max-w-md">
+        {/* Header */}
+        <div className="mb-12 text-center">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-lg bg-blue-600 text-lg font-black text-white shadow-md">
+            SGI
           </div>
+          <h1 className="text-2xl font-bold text-slate-900">SGI TI UAI</h1>
+          <p className="mt-1 text-sm text-slate-600">Gestão de Melhorias Contínuas</p>
+        </div>
+
+        {/* Login Card */}
+        <div className="rounded-lg bg-white p-8 shadow-lg border border-slate-200">
+          {/* Error Message */}
+          {errors.general && (
+            <div className="mb-6 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm font-medium text-red-700">
+              {errors.general}
+            </div>
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Error Message */}
-            {errors.general && (
-              <div className="rounded-lg bg-red-500/10 border border-red-500/30 px-4 py-3 text-sm font-bold text-red-300">
-                {errors.general}
-              </div>
-            )}
-
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-bold text-slate-200 mb-2">
+              <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">
                 E-mail
               </label>
               <input
@@ -63,15 +58,16 @@ const Login = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="seu@email.com"
+                placeholder="nome@empresa.com"
                 required
-                className="w-full rounded-lg bg-white/10 border border-white/20 px-4 py-3 text-white placeholder-slate-400 transition focus:border-blue-400/50 focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                autoComplete="email"
+                className="w-full rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 text-slate-900 placeholder-slate-400 transition focus:bg-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-bold text-slate-200 mb-2">
+              <label htmlFor="password" className="block text-sm font-semibold text-slate-700 mb-2">
                 Senha
               </label>
               <div className="relative">
@@ -80,16 +76,18 @@ const Login = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Digite sua senha"
+                  placeholder="••••••••"
                   required
-                  className="w-full rounded-lg bg-white/10 border border-white/20 px-4 py-3 pr-12 text-white placeholder-slate-400 transition focus:border-blue-400/50 focus:bg-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                  autoComplete="current-password"
+                  className="w-full rounded-lg border border-slate-300 bg-slate-50 px-4 py-3 pr-12 text-slate-900 placeholder-slate-400 transition focus:bg-white focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 transition"
+                  title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
                 >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
             </div>
@@ -98,11 +96,11 @@ const Login = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 px-4 py-3 font-bold text-white transition hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+              className="w-full mt-7 flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition hover:bg-blue-700 active:bg-blue-800 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <>
-                  <Loader size={20} className="animate-spin" />
+                  <Loader size={18} className="animate-spin" />
                   Entrando...
                 </>
               ) : (
@@ -112,8 +110,8 @@ const Login = () => {
           </form>
 
           {/* Footer */}
-          <p className="mt-6 text-center text-xs text-slate-400">
-            Ambiente seguro. Seus dados são protegidos.
+          <p className="mt-6 text-center text-xs text-slate-500">
+            Conexão segura e criptografada
           </p>
         </div>
       </div>
