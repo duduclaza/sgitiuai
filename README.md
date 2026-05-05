@@ -75,7 +75,7 @@ Altere a senha no primeiro acesso.
 ## Rodar Localmente
 
 ```bash
-php -S 127.0.0.1:8000 -t public
+php -S 127.0.0.1:8000
 ```
 
 Acesse:
@@ -96,7 +96,7 @@ APP_ENV=production
 APP_DEBUG=false
 ```
 
-No servidor, a raiz pública do domínio deve apontar para a pasta `public`.
+No servidor, o projeto pode rodar direto na raiz do domínio. O arquivo `index.php` principal fica na raiz e redireciona para o bootstrap em `public/index.php`.
 
 ### Produção na Hostinger
 
@@ -122,6 +122,14 @@ O domínio de produção configurado é:
 ```text
 https://sgi.tiuai.com.br
 ```
+
+Formulário público de captação de melhorias:
+
+```text
+https://sgi.tiuai.com.br/melhoria-publica
+```
+
+O QR Code desse formulário fica em `public/assets/img/qr-melhoria-publica.png` e também é publicado em `/assets/img/qr-melhoria-publica.png` para uso na Hostinger.
 
 ## Estrutura
 
@@ -150,7 +158,7 @@ https://sgi.tiuai.com.br
 - Dashboard com cards, indicadores e gráficos
 - Usuários com perfis, status e permissões
 - Departamentos
-- Melhorias com status, prioridade, data de abertura, causa raiz e ganho estimado
+- Melhorias com ticket de acompanhamento, status, prioridade, data de abertura, causa raiz e consulta pública de status
 - Reuniões
 - PDCA vinculado à melhoria
 - SWOT vinculado à melhoria

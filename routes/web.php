@@ -12,9 +12,14 @@ use App\Controllers\ImprovementController;
 use App\Controllers\MeetingController;
 use App\Controllers\NotificationController;
 use App\Controllers\PdcaController;
+use App\Controllers\PublicImprovementController;
 use App\Controllers\ReportController;
 use App\Controllers\SwotController;
 use App\Controllers\UserController;
+
+$router->get('/melhoria-publica', [PublicImprovementController::class, 'index']);
+$router->post('/melhoria-publica', [PublicImprovementController::class, 'store']);
+$router->post('/melhoria-publica/consultar', [PublicImprovementController::class, 'lookup']);
 
 $router->get('/login', [AuthController::class, 'login']);
 $router->post('/login', [AuthController::class, 'authenticate']);

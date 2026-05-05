@@ -56,6 +56,46 @@ body {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
 }
 
+.public-body {
+  background:
+    radial-gradient(circle at top right, rgba(37, 99, 235, 0.14), transparent 30rem),
+    radial-gradient(circle at bottom left, rgba(14, 165, 233, 0.09), transparent 28rem),
+    linear-gradient(180deg, #f8fafc 0%, #edf4fb 100%);
+}
+
+.public-panel {
+  transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.public-panel:hover {
+  border-color: rgba(191, 219, 254, 0.95);
+  box-shadow: 0 24px 58px rgba(15, 23, 42, 0.08);
+}
+
+.public-tab {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.875rem;
+  color: #475569;
+  font-size: 0.875rem;
+  font-weight: 800;
+  transition: background-color 180ms ease, color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.public-tab:hover {
+  background: rgba(255, 255, 255, 0.72);
+  color: #1d4ed8;
+}
+
+.public-tab.is-active {
+  background: #fff;
+  color: #1d4ed8;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
 svg,
 canvas,
 img {

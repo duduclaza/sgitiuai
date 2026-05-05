@@ -12,9 +12,9 @@ $implantationRate = $stats['total'] > 0 ? round(($stats['implantation'] / $stats
 $cards = [
     ['label' => 'Total de melhorias', 'value' => $stats['total'], 'icon' => 'sparkles', 'tone' => 'blue'],
     ['label' => 'Abertas', 'value' => $stats['open'], 'icon' => 'folder-open', 'tone' => 'sky'],
-    ['label' => 'Concluídas', 'value' => $stats['done'], 'icon' => 'circle-check', 'tone' => 'emerald'],
     ['label' => 'Em implantação', 'value' => $stats['implantation'], 'icon' => 'rocket', 'tone' => 'amber'],
-    ['label' => 'Ganho estimado', 'value' => money_br($stats['gain']), 'icon' => 'trending-up', 'tone' => 'slate'],
+    ['label' => 'Concluídas', 'value' => $stats['done'], 'icon' => 'circle-check', 'tone' => 'emerald'],
+    ['label' => 'Tickets gerados', 'value' => $stats['total'], 'icon' => 'ticket-check', 'tone' => 'slate'],
 ];
 ?>
 
@@ -23,7 +23,7 @@ $cards = [
     <div>
       <p class="text-xs font-black uppercase tracking-normal text-blue-600">Visão executiva</p>
       <h2 class="mt-2 text-2xl font-black text-slate-950 sm:text-3xl">Melhorias contínuas em andamento</h2>
-      <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-500">Acompanhe abertura, implantação, conclusão e ganho estimado com uma leitura rápida e limpa para tomada de decisão.</p>
+      <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-500">Acompanhe tickets, abertura, implantação e conclusão com uma leitura rápida e limpa para tomada de decisão.</p>
     </div>
     <div class="grid grid-cols-2 gap-3">
       <div class="rounded-3xl border border-slate-200 bg-slate-50/80 p-4">
@@ -44,7 +44,7 @@ $cards = [
   </div>
 </section>
 
-<section class="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+<section class="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
   <?php foreach ($cards as $card): ?>
     <article class="metric-card rounded-[1.35rem] border border-slate-200/85 bg-white/90 p-5 shadow-sm shadow-slate-200/70">
       <div class="flex items-start justify-between gap-4">

@@ -9,7 +9,7 @@
     <article class="soft-card rounded-3xl p-5">
       <div class="flex items-start justify-between gap-3">
         <div>
-          <p class="text-xs font-bold text-slate-500">#<?= (int) $improvement['id'] ?> · <?= e($improvement['status']) ?></p>
+          <p class="text-xs font-bold text-slate-500"><?= e($improvement['ticket'] ?? ('#' . (int) $improvement['id'])) ?> · <?= e($improvement['status']) ?></p>
           <h2 class="mt-1 font-black text-slate-950"><?= e($improvement['titulo']) ?></h2>
           <p class="mt-2 line-clamp-2 text-sm text-slate-500"><?= e($improvement['descricao_problema']) ?></p>
         </div>

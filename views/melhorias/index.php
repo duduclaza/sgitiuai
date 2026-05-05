@@ -11,7 +11,7 @@ $priorityColors = ['Baixa' => 'bg-slate-100 text-slate-700', 'Média' => 'bg-blu
 ?>
 <div class="mb-5 flex flex-col gap-3 xl:flex-row xl:items-end xl:justify-between">
   <form method="get" class="grid flex-1 gap-3 md:grid-cols-3 xl:grid-cols-7">
-    <input class="form-input md:col-span-2 xl:col-span-2" name="q" value="<?= e($filters['q']) ?>" placeholder="Buscar melhoria">
+    <input class="form-input md:col-span-2 xl:col-span-2" name="q" value="<?= e($filters['q']) ?>" placeholder="Buscar por ticket, título ou problema">
     <select class="form-select" name="status">
       <option value="">Todos os status</option>
       <?php foreach ($statuses as $status): ?><option value="<?= e($status) ?>" <?= $filters['status'] === $status ? 'selected' : '' ?>><?= e($status) ?></option><?php endforeach; ?>
@@ -28,7 +28,10 @@ $priorityColors = ['Baixa' => 'bg-slate-100 text-slate-700', 'Média' => 'bg-blu
     <button class="btn-secondary" type="submit"><i data-lucide="search" class="h-4 w-4"></i>Filtrar</button>
   </form>
   <?php if (can(['admin', 'usuario'], 'criar_melhoria')): ?>
-    <a href="<?= url('/melhorias/nova') ?>" class="btn-primary"><i data-lucide="plus" class="h-4 w-4"></i>Nova melhoria</a>
+    <div class="flex flex-wrap gap-2">
+      <a href="<?= url('/melhoria-publica') ?>" class="btn-secondary" target="_blank" rel="noopener"><i data-lucide="qr-code" class="h-4 w-4"></i>Link público</a>
+      <a href="<?= url('/melhorias/nova') ?>" class="btn-primary"><i data-lucide="plus" class="h-4 w-4"></i>Nova melhoria</a>
+    </div>
   <?php endif; ?>
 </div>
 
@@ -37,6 +40,7 @@ $priorityColors = ['Baixa' => 'bg-slate-100 text-slate-700', 'Média' => 'bg-blu
     <table class="data-table">
       <thead>
       <tr>
+        <th>Ticket</th>
         <th>Título</th>
         <th>Departamento</th>
         <th>Status</th>
@@ -48,6 +52,9 @@ $priorityColors = ['Baixa' => 'bg-slate-100 text-slate-700', 'Média' => 'bg-blu
       <tbody>
       <?php foreach ($improvements as $improvement): ?>
         <tr>
+          <td>
+            <span class="font-black text-slate-900"><?= e($improvement['ticket'] ?? '-') ?></span>
+          </td>
           <td>
             <a href="<?= url('/melhorias/' . $improvement['id']) ?>" class="font-black text-slate-950 hover:text-blue-700"><?= e($improvement['titulo']) ?></a>
             <p class="mt-1 line-clamp-1 text-sm text-slate-500"><?= e($improvement['descricao_problema'] ?? '') ?></p>
@@ -66,7 +73,7 @@ $priorityColors = ['Baixa' => 'bg-slate-100 text-slate-700', 'Média' => 'bg-blu
           </td>
         </tr>
       <?php endforeach; ?>
-      <?php if (!$improvements): ?><tr><td colspan="6" class="text-center text-slate-500">Nenhuma melhoria encontrada.</td></tr><?php endif; ?>
+      <?php if (!$improvements): ?><tr><td colspan="7" class="text-center text-slate-500">Nenhuma melhoria encontrada.</td></tr><?php endif; ?>
       </tbody>
     </table>
   </div>

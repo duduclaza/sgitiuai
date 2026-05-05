@@ -54,14 +54,15 @@ class ImprovementController extends Controller
             $this->backWithError('Você não tem permissão para cadastrar melhorias.');
         }
 
-        $data = $this->payload();
+        $data = $this->payload(true);
         $data['criado_por'] = Auth::id();
         $data['data_abertura'] = $data['data_abertura'] ?: date('Y-m-d');
-        $id = (new Improvement())->create($data);
+        $created = (new Improvement())->createWithTicket($data);
+        $id = $created['id'];
 
-        AuditLogger::log('criação', 'melhorias', $id, ['titulo' => $data['titulo']]);
+        AuditLogger::log('criação', 'melhorias', $id, ['titulo' => $data['titulo'], 'ticket' => $created['ticket']]);
 
-        flash('success', 'Melhoria cadastrada.');
+        flash('success', 'Melhoria cadastrada com o ticket ' . $created['ticket'] . '.');
         redirect('/melhorias/' . $id);
     }
 
@@ -97,7 +98,7 @@ class ImprovementController extends Controller
         verify_csrf();
         $model = new Improvement();
         $before = $model->find((int) $id);
-        $data = $this->payload();
+        $data = $this->payload(false);
         $model->update((int) $id, $data);
 
         AuditLogger::log('edição', 'melhorias', (int) $id, ['status' => $data['status']]);
@@ -129,28 +130,30 @@ class ImprovementController extends Controller
         ];
     }
 
-    private function payload(): array
+    private function payload(bool $creating = false): array
     {
         $title = trim((string) ($_POST['titulo'] ?? ''));
         if ($title === '') {
             $this->backWithError('O título da melhoria é obrigatório.');
         }
 
-        return [
+        $data = [
             'titulo' => $title,
             'departamento_id' => $_POST['departamento_id'] !== '' ? (int) $_POST['departamento_id'] : null,
             'descricao_problema' => trim((string) ($_POST['descricao_problema'] ?? '')),
             'melhoria_sugerida' => trim((string) ($_POST['melhoria_sugerida'] ?? '')),
             'prioridade' => (string) ($_POST['prioridade'] ?? 'Média'),
-            'status' => (string) ($_POST['status'] ?? 'Aberta'),
+            'status' => $creating ? 'Aberta' : (string) ($_POST['status'] ?? 'Aberta'),
             'responsavel_id' => null,
             'responsavel_nome' => trim((string) ($_POST['responsavel_nome'] ?? '')),
-            'prazo' => ($_POST['prazo'] ?? '') !== '' ? $_POST['prazo'] : null,
-            'ganho_estimado' => (float) str_replace(',', '.', (string) ($_POST['ganho_estimado'] ?? 0)),
+            'prazo' => null,
+            'ganho_estimado' => 0,
             'data_abertura' => ($_POST['data_abertura'] ?? '') !== '' ? $_POST['data_abertura'] : null,
-            'data_conclusao' => ($_POST['data_conclusao'] ?? '') !== '' ? $_POST['data_conclusao'] : null,
+            'data_conclusao' => null,
             'causa_raiz' => trim((string) ($_POST['causa_raiz'] ?? '')),
             'observacoes' => trim((string) ($_POST['observacoes'] ?? '')),
         ];
+
+        return $data;
     }
 }

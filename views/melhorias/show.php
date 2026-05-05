@@ -3,7 +3,7 @@ $statusColors = ['Aberta' => 'bg-sky-100 text-sky-700', 'Em análise' => 'bg-ind
 ?>
 <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
   <div>
-    <p class="text-sm font-bold text-slate-500">Melhoria #<?= (int) $improvement['id'] ?></p>
+    <p class="text-sm font-bold text-slate-500">Ticket <?= e($improvement['ticket'] ?? ('#' . (int) $improvement['id'])) ?></p>
     <h2 class="text-2xl font-black text-slate-950"><?= e($improvement['titulo']) ?></h2>
   </div>
   <div class="flex flex-wrap gap-2">
@@ -49,8 +49,8 @@ $statusColors = ['Aberta' => 'bg-sky-100 text-sky-700', 'Em análise' => 'bg-ind
       <h3 class="font-black text-slate-950">Acompanhamento</h3>
       <dl class="mt-4 space-y-3 text-sm">
         <div class="flex justify-between gap-4"><dt class="text-slate-500">Responsável</dt><dd class="font-bold text-slate-800"><?= e($improvement['responsavel_nome'] ?? '-') ?></dd></div>
+        <div class="flex justify-between gap-4"><dt class="text-slate-500">Ticket</dt><dd class="font-bold text-slate-800"><?= e($improvement['ticket'] ?? '-') ?></dd></div>
         <div class="flex justify-between gap-4"><dt class="text-slate-500">Abertura</dt><dd class="font-bold text-slate-800"><?= date_br($improvement['data_abertura']) ?></dd></div>
-        <div class="flex justify-between gap-4"><dt class="text-slate-500">Ganho</dt><dd class="font-bold text-slate-800"><?= money_br($improvement['ganho_estimado']) ?></dd></div>
       </dl>
     </article>
 

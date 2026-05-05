@@ -40,19 +40,18 @@
 <section class="soft-card mt-6 overflow-hidden rounded-3xl">
   <div class="table-wrap">
     <table class="data-table">
-      <thead><tr><th>ID</th><th>Título</th><th>Status</th><th>Departamento</th><th>Responsável</th><th>Ganho</th></tr></thead>
+      <thead><tr><th>Ticket</th><th>Título</th><th>Status</th><th>Departamento</th><th>Responsável</th></tr></thead>
       <tbody>
       <?php foreach ($rows as $row): ?>
         <tr>
-          <td>#<?= (int) $row['id'] ?></td>
+          <td class="font-black text-slate-900"><?= e($row['ticket'] ?? '-') ?></td>
           <td><a class="font-black text-slate-950 hover:text-blue-700" href="<?= url('/melhorias/' . $row['id']) ?>"><?= e($row['titulo']) ?></a></td>
           <td><?= e($row['status']) ?></td>
           <td><?= e($row['departamento_nome'] ?? '-') ?></td>
           <td><?= e($row['responsavel_nome'] ?? '-') ?></td>
-          <td><?= money_br($row['ganho_estimado']) ?></td>
         </tr>
       <?php endforeach; ?>
-      <?php if (!$rows): ?><tr><td colspan="6" class="text-center text-slate-500">Nenhum dado para os filtros selecionados.</td></tr><?php endif; ?>
+      <?php if (!$rows): ?><tr><td colspan="5" class="text-center text-slate-500">Nenhum dado para os filtros selecionados.</td></tr><?php endif; ?>
       </tbody>
     </table>
   </div>

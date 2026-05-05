@@ -7,7 +7,7 @@
 <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
   <?php foreach ($improvements as $improvement): ?>
     <article class="soft-card rounded-3xl p-5">
-      <p class="text-xs font-bold text-slate-500">#<?= (int) $improvement['id'] ?> · <?= e($improvement['status']) ?></p>
+      <p class="text-xs font-bold text-slate-500"><?= e($improvement['ticket'] ?? ('#' . (int) $improvement['id'])) ?> · <?= e($improvement['status']) ?></p>
       <h2 class="mt-1 font-black text-slate-950"><?= e($improvement['titulo']) ?></h2>
       <a href="<?= url('/5w2h/' . $improvement['id'] . '/editar') ?>" class="btn-secondary mt-4 w-full">Editar 5W2H</a>
     </article>

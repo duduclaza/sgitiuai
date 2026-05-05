@@ -36,6 +36,7 @@ class CreateInitialSchema
         $pdo->exec(
             "CREATE TABLE IF NOT EXISTS melhorias (
                 id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                ticket VARCHAR(24) NULL,
                 titulo VARCHAR(190) NOT NULL,
                 departamento_id INT UNSIGNED NULL,
                 descricao_problema TEXT NULL,
@@ -53,6 +54,7 @@ class CreateInitialSchema
                 criado_por INT UNSIGNED NULL,
                 created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                UNIQUE KEY idx_melhorias_ticket (ticket),
                 INDEX idx_melhorias_status (status),
                 INDEX idx_melhorias_departamento (departamento_id),
                 INDEX idx_melhorias_responsavel (responsavel_id),

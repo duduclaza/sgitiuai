@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Core\Model;
+use Throwable;
 
 class Improvement extends Model
 {
@@ -24,6 +25,73 @@ class Improvement extends Model
         'observacoes',
         'criado_por',
     ];
+
+    public function createWithTicket(array $data): array
+    {
+        $db = $this->db();
+        $startedTransaction = !$db->inTransaction();
+
+        if ($startedTransaction) {
+            $db->beginTransaction();
+        }
+
+        try {
+            $id = $this->create($data);
+            $ticket = $this->assignTicket($id, $data['data_abertura'] ?? null);
+
+            if ($startedTransaction) {
+                $db->commit();
+            }
+
+            return ['id' => $id, 'ticket' => $ticket];
+        } catch (Throwable $exception) {
+            if ($startedTransaction && $db->inTransaction()) {
+                $db->rollBack();
+            }
+
+            throw $exception;
+        }
+    }
+
+    public function assignTicket(int $id, ?string $date = null): string
+    {
+        $current = $this->find($id);
+        if (!empty($current['ticket'])) {
+            return (string) $current['ticket'];
+        }
+
+        $ticket = $this->formatTicket($id, $date ?: ($current['data_abertura'] ?? null));
+        $statement = $this->db()->prepare('UPDATE melhorias SET ticket = :ticket WHERE id = :id');
+        $statement->execute(['ticket' => $ticket, 'id' => $id]);
+
+        return $ticket;
+    }
+
+    public function findByTicket(string $ticket): ?array
+    {
+        $normalized = $this->normalizeTicket($ticket);
+        if ($normalized === '') {
+            return null;
+        }
+
+        $statement = $this->db()->prepare(
+            "SELECT m.ticket, m.titulo, m.status, m.prioridade, m.data_abertura, m.updated_at,
+                    d.nome AS departamento_nome
+             FROM melhorias m
+             LEFT JOIN departamentos d ON d.id = m.departamento_id
+             WHERE m.ticket = :ticket
+             LIMIT 1"
+        );
+        $statement->execute(['ticket' => $normalized]);
+        $item = $statement->fetch();
+
+        return $item ?: null;
+    }
+
+    public function normalizeTicket(string $ticket): string
+    {
+        return strtoupper(trim(preg_replace('/\s+/', '', $ticket) ?? ''));
+    }
 
     public function list(array $filters = []): array
     {
@@ -63,13 +131,12 @@ class Improvement extends Model
         $open = (int) $db->query("SELECT COUNT(*) FROM melhorias WHERE status = 'Aberta'")->fetchColumn();
         $done = (int) $db->query("SELECT COUNT(*) FROM melhorias WHERE status = 'Concluída'")->fetchColumn();
         $implantation = (int) $db->query("SELECT COUNT(*) FROM melhorias WHERE status = 'Em implantação'")->fetchColumn();
-        $gain = (float) $db->query("SELECT COALESCE(SUM(ganho_estimado), 0) FROM melhorias WHERE status <> 'Cancelada'")->fetchColumn();
 
         $byStatus = $db->query('SELECT status, COUNT(*) total FROM melhorias GROUP BY status ORDER BY total DESC')->fetchAll();
         $byDepartment = $db->query('SELECT d.nome, COUNT(m.id) total FROM departamentos d LEFT JOIN melhorias m ON m.departamento_id = d.id GROUP BY d.id, d.nome ORDER BY total DESC LIMIT 8')->fetchAll();
         $monthly = $db->query("SELECT DATE_FORMAT(data_abertura, '%Y-%m') mes, COUNT(*) total FROM melhorias GROUP BY mes ORDER BY mes ASC LIMIT 12")->fetchAll();
 
-        return compact('total', 'open', 'done', 'implantation', 'gain', 'byStatus', 'byDepartment', 'monthly');
+        return compact('total', 'open', 'done', 'implantation', 'byStatus', 'byDepartment', 'monthly');
     }
 
     public function report(array $filters = []): array
@@ -83,7 +150,7 @@ class Improvement extends Model
         $params = [];
 
         if (!empty($filters['q'])) {
-            $sql .= ' AND (m.titulo LIKE :q OR m.descricao_problema LIKE :q OR m.melhoria_sugerida LIKE :q)';
+            $sql .= ' AND (m.ticket LIKE :q OR m.titulo LIKE :q OR m.descricao_problema LIKE :q OR m.melhoria_sugerida LIKE :q)';
             $params['q'] = '%' . $filters['q'] . '%';
         }
 
@@ -120,5 +187,13 @@ class Improvement extends Model
         }
 
         return [$sql, $params];
+    }
+
+    private function formatTicket(int $id, ?string $date = null): string
+    {
+        $timestamp = $date ? strtotime($date) : false;
+        $year = $timestamp ? date('Y', $timestamp) : date('Y');
+
+        return 'MEL-' . $year . '-' . str_pad((string) $id, 6, '0', STR_PAD_LEFT);
     }
 }

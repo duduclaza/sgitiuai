@@ -18,6 +18,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  document.querySelectorAll('[data-public-tab]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const target = button.dataset.publicTab || 'formulario';
+      document.querySelectorAll('[data-public-tab]').forEach((tab) => {
+        tab.classList.toggle('is-active', tab.dataset.publicTab === target);
+      });
+      document.querySelectorAll('[data-public-panel]').forEach((panel) => {
+        panel.classList.toggle('hidden', panel.dataset.publicPanel !== target);
+      });
+    });
+  });
+
   document.querySelectorAll('canvas[data-particles]').forEach((canvas) => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;

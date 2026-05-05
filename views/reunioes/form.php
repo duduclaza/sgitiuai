@@ -22,7 +22,8 @@
       <span class="mb-2 block text-sm font-bold text-slate-700">Melhorias discutidas</span>
       <select class="form-select min-h-36" name="melhorias_discutidas[]" multiple>
         <?php foreach ($improvements as $improvement): ?>
-          <option value="#<?= (int) $improvement['id'] ?> <?= e($improvement['titulo']) ?>" <?= in_array('#' . $improvement['id'] . ' ' . $improvement['titulo'], $selected, true) ? 'selected' : '' ?>>#<?= (int) $improvement['id'] ?> <?= e($improvement['titulo']) ?></option>
+          <?php $label = ($improvement['ticket'] ?? '#' . $improvement['id']) . ' ' . $improvement['titulo']; ?>
+          <option value="<?= e($label) ?>" <?= in_array($label, $selected, true) ? 'selected' : '' ?>><?= e($label) ?></option>
         <?php endforeach; ?>
       </select>
     </label>

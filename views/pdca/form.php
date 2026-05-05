@@ -1,7 +1,7 @@
 <?php $stages = ['plan' => 'Plan', 'do' => 'Do', 'check' => 'Check', 'act' => 'Act']; ?>
 <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
   <div>
-    <p class="text-sm font-bold text-slate-500">Melhoria #<?= (int) $improvement['id'] ?></p>
+    <p class="text-sm font-bold text-slate-500">Ticket <?= e($improvement['ticket'] ?? ('#' . (int) $improvement['id'])) ?></p>
     <h2 class="text-2xl font-black text-slate-950"><?= e($improvement['titulo']) ?></h2>
   </div>
   <a class="btn-secondary" href="<?= url('/melhorias/' . $improvement['id']) ?>"><i data-lucide="arrow-left" class="h-4 w-4"></i>Voltar</a>
